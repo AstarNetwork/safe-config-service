@@ -36,6 +36,9 @@ ALLOWED_HOSTS = [allowed_host.strip() for allowed_host in allowed_hosts.split(",
 
 # Application definition
 
+APPLICATION_VERSION = os.getenv("APPLICATION_VERSION")
+APPLICATION_BUILD_NUMBER = os.getenv("APPLICATION_BUILD_NUMBER")
+
 REST_FRAMEWORK = {
     # https://www.django-rest-framework.org/api-guide/renderers/
     "DEFAULT_RENDERER_CLASSES": [
@@ -232,3 +235,7 @@ if allowed_csrf_origins:
         allowed_csrf_origins.strip()
         for allowed_csrf_origins in allowed_csrf_origins.split(",")
     ]
+
+use_proxy_ssl_header = os.environ.get("USE_PROXY_SSL_HEADER", "false").lower() == "true"
+if use_proxy_ssl_header:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

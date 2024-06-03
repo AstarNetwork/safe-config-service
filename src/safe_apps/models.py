@@ -1,4 +1,5 @@
 import os
+import uuid
 from enum import Enum
 from typing import IO, Union
 
@@ -17,7 +18,7 @@ _HOSTNAME_VALIDATOR = RegexValidator(
 
 def safe_app_icon_path(instance: "SafeApp", filename: str) -> str:
     _, file_extension = os.path.splitext(filename)
-    return f"safe_apps/{instance.app_id}/icon{file_extension}"
+    return f"safe_apps/{uuid.uuid4()}/icon{file_extension}"
 
 
 def validate_safe_app_icon_size(image: Union[str, IO[bytes]]) -> None:
@@ -57,9 +58,9 @@ class SafeApp(models.Model):
         DOMAIN_ALLOWLIST = "DOMAIN_ALLOWLIST"
 
     app_id = models.BigAutoField(primary_key=True)
-    visible = models.BooleanField(
+    listed = models.BooleanField(
         default=True
-    )  # True if this safe-app should be visible from the view. False otherwise
+    )  # True if this safe-app should be listed in the view. False otherwise
     url = models.URLField()
     name = models.CharField(max_length=200)
     icon_url = models.ImageField(
