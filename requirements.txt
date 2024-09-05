@@ -11,3 +11,4 @@ gunicorn==22.0.0
 Pillow==10.3.0
 psycopg2-binary==2.9.9
 requests==2.32.3
+web3==6.11.4
